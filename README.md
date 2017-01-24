@@ -1,0 +1,2 @@
+# druplicate
+Simple content manager
