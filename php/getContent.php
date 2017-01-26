@@ -1,5 +1,6 @@
 <?php
 $id = $_GET["id"];
+$content = $_GET["content"];
 
 $servername = "localhost";
 $username = "root";
@@ -22,9 +23,9 @@ if ($result->num_rows > 0) {
         echo $row["content"];
     }
 } else {
-    $sql = "INSERT INTO content(id, content) VALUES (".$id.",'Click here to add Content')";
+    $sql = "INSERT INTO content(id, content) VALUES (".$id.",".$content.")";
     $conn->query($sql);
-    echo "Click here to add Content";
+    echo substr($content,1,-1);
 }
 $conn->close();
 ?>

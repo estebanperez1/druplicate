@@ -10,34 +10,78 @@
         <title>UC Water</title>
 
 
-
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <style>
         .card
         {
             box-shadow: 0px 0px 5px 1px #5F5F5F;
             border-radius: 5px;
-            padding: 5px 7px;
             margin-bottom: 10px;
+            padding: 10px;
         }
-        .editButton
+        .submitArea
         {
-            float: right;
+            min-height: 200px;
+            max-width: 100%;
         }
-        .editBar
+
+        <?php
+        $user = true;
+        if($user)
         {
-            width: 100%;
-            height: 20px;
-            border-bottom: solid 1px black
+            echo ".editable
+        {
+
+        }";
+        }
+        ?>
+        .test
+        {
+
+        }
+        .editWrapper
+        {
+            min-height:10px;
+            margin-top:20px;
+            padding: 5px 10px;
+            position:relative;
+            border:solid 1px lightgray;
+            border-radius: 5px;
+        }
+        .editButton, .addTemplateButton
+        {
+            position: absolute;
+            top: -13px;
+            right: 20px;
+            height: 26px;
+            width: 26px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0px 0px 5px 1px #5F5F5F;
+        }
+        .editableTemplate
+        {
+            min-height:10px;
+            margin-top:20px;
+            padding: 5px 10px;
+            position:relative;
+            border:solid 1px lightgray;
+            border-radius: 5px;
         }
     </style>
+
     <body>
 
-        <div class="card editable" id="test"></div>
-        <div class="card editable" id="test3"></div>
-        <p class="editable" id="paragraph"></p>
-        <div class="editable" id="test4"></div>
-
+        <div class="editable" id="noIdd"></div>
+        <div class="test editable" id="list"></div>
+        <h1 class="editable" id ="header"></h1>
+        <div class="editableTemplate" id ="header">
+            <div class="card">
+                <h1 class="editable" id="templateHeader"></h1>
+                <p class="editable" id="templateParagraph"></p>
+            </div>
+        </div>
 
 
 
@@ -45,37 +89,40 @@
             <p>©UC Water 2016</p>
         </footer>
         <script src="./js/libraries/jquery-3.1.1.min.js"></script>
-        <form action="updateContent.php" method="post">
-            <textarea name="post_contents"></textarea>
-            <input type="submit">
-        </form>
+
         <script>
-            function editBar(temp)
-            {
-                temp.innerHTML = '<div class="editBar"><a href="#" class = "editButton">edit</a></div><div class="fetchedData">'+temp.innerHTML+"</div>";
-                $("#"+temp.id+" .editButton").click(function(){
-                    editContent($("#"+temp.id));
-                });
-            }
-            function editContent(elem)
-            {
-                var temp = elem.children()[1].innerHTML;
-                var content = '<form action="./php/updateContent.php" method="post"><input type="text" name="id" value="'+elem[0].id+'"><textarea name="post_contents" style="width:100%"></textarea><input type="submit"></form>';
-                elem.children()[1].innerHTML = content;
-                elem.find( "textarea" ).val(temp);
-            }
+
         </script>
         <script>
+
+            /*Select all editable elements, and refresh the content from the database*/
             var editables = $(".editable");
             editables.each(function(){
-                var temp = $(this)[0];
-                var query = './php/getContent.php?id="'+temp.id+'"';
-                $.get(query, function(data) {
-                    var out = data;
-                    temp.innerHTML = out;
-                   <?php echo "editBar(temp);";?>*/
-                });
+                getContent($(this));
             });
+
+
+            /*pull the content from the database, and update the screens content*/
+            function getContent(elem)
+            {
+                console.log("getContent: "+elem[0].innerHTML);
+                $.ajax({
+                    url: './php/getContent.php',
+                    type: 'GET',
+                    data: {
+                        "id": '"'+elem[0].id+'"',
+                        "content": '"'+elem[0].innerHTML+'"'
+                    },
+                    success: function(data) {
+                        var out = data;
+                        elem[0].innerHTML = out;
+                        <?php $user = true;if($user){echo "addEditButton(elem);";}?>
+                    },
+                    error: function(e) {
+                        alert("oops");
+                    }
+                });
+            }
 
         </script>
 
@@ -83,7 +130,7 @@
         $user = true;
         if($user)
         {
-
+            echo '<script src="./js/custom/editContent.js"></script';
         }
         ?>
     </body>

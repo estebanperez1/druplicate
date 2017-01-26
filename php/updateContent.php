@@ -1,5 +1,6 @@
 <?php
-$id = $_POST["id"];
+$id = $_GET["id"];
+$content = $_GET["content"];
 
 $servername = "localhost";
 $username = "root";
@@ -12,10 +13,15 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+echo $id;
 
-
-$sql = "UPDATE content SET content = '$_POST[post_contents]' WHERE content.id = '$id'";
-$result = $conn->query($sql);
+$sql = 'UPDATE content SET content = "'.$content.'" WHERE content.id = "'.$id.'"';
+if($result = $conn->query($sql))
+{
+    echo "we did it";
+}else
+{
+    echo "we didnt do it";
+}
 $conn->close();
-header("location:javascript://history.go(-1)");
 ?>
