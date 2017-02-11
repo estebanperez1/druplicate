@@ -17,7 +17,7 @@ function editWindow(elem)
     console.log("str is:" + str);
     str = str.replace(/"/g, "'");
     $.ajax({
-        url: './php/getContent.php',
+        url: './php/getRawContent.php',
         type: 'GET',
         data: {
             "id": '"'+elem[0].id+'"',

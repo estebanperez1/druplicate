@@ -1,3 +1,6 @@
+<?php
+$user = true;
+?>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -20,61 +23,17 @@
             margin-bottom: 10px;
             padding: 10px;
         }
-        .submitArea
-        {
-            min-height: 200px;
-            max-width: 100%;
-        }
-
-        <?php
-        $user = true;
-        if($user)
-        {
-            echo ".editable
-        {
-
-        }";
-        }
-        ?>
-        .test
-        {
-
-        }
-        .editWrapper
-        {
-            min-height:10px;
-            margin-top:20px;
-            padding: 5px 10px;
-            position:relative;
-            border:solid 1px lightgray;
-            border-radius: 5px;
-        }
-        .editButton, .addTemplateButton
-        {
-            position: absolute;
-            top: -13px;
-            right: 20px;
-            height: 26px;
-            width: 26px;
-            background: white;
-            border-radius: 50%;
-            box-shadow: 0px 0px 5px 1px #5F5F5F;
-        }
-        .editableTemplate
-        {
-            min-height:10px;
-            margin-top:20px;
-            padding: 5px 10px;
-            position:relative;
-            border:solid 1px lightgray;
-            border-radius: 5px;
-        }
     </style>
 
     <body>
 
         <div class="editable" id="noIdd"></div>
-        <div class="test editable" id="list"></div>
+        <div class="test editable" id="list">
+            <ul>
+                <li>test for stripping extra tabs and stuff</li>
+                <li>Test</li>
+            </ul>
+        </div>
         <h1 class="editable" id ="header"></h1>
         <div class="editableTemplate" id ="header">
             <div class="card">
@@ -82,12 +41,17 @@
                 <p class="editable" id="templateParagraph"></p>
             </div>
         </div>
+        <div class="" id ="asdfadsf">
+            <div> test</div>
+        </div>
+        <div class="editable" id ="asdfdsd">
+            <div>
+            </div>
+        </div>
 
 
 
-        <footer>
-            <p>©UC Water 2016</p>
-        </footer>
+
         <script src="./js/libraries/jquery-3.1.1.min.js"></script>
 
         <script>
@@ -116,7 +80,7 @@
                     success: function(data) {
                         var out = data;
                         elem[0].innerHTML = out;
-                        <?php $user = true;if($user){echo "addEditButton(elem);";}?>
+                        <?php if($user){echo "addEditButton(elem);";}?>
                     },
                     error: function(e) {
                         alert("oops");
@@ -125,12 +89,11 @@
             }
 
         </script>
-
         <?php
-        $user = true;
         if($user)
         {
-            echo '<script src="./js/custom/editContent.js"></script';
+            include("./php/style.php");
+            echo '<script src="./js/custom/editContent.js"></script>';
         }
         ?>
     </body>
